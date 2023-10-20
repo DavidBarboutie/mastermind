@@ -1,1 +1,5 @@
 U:\Espace privé\ap\ap mastermind\mastermind\mastermind\obj\Debug\mastermind.csprojResolveAssemblyReference.cache
+U:\Espace privé\ap\ap mastermind\mastermind\mastermind\bin\Debug\mastermind.exe
+U:\Espace privé\ap\ap mastermind\mastermind\mastermind\bin\Debug\mastermind.pdb
+U:\Espace privé\ap\ap mastermind\mastermind\mastermind\obj\Debug\mastermind.exe
+U:\Espace privé\ap\ap mastermind\mastermind\mastermind\obj\Debug\mastermind.pdb
