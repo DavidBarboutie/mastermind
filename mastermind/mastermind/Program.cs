@@ -15,6 +15,7 @@ namespace mastermind
 	class Program
 	{
 		//verifie les caracteres
+		//utilise regex
 		public static bool caractValide(char caract, bool joueur1){
 			return true;
 		}
@@ -25,7 +26,6 @@ namespace mastermind
 		//fonction qui fait fonctionner la partie du joueur 2
 		public static void Joueur2(ref int nbE, char[] combinaison, char[] essaie){
 			//
-		
 		}
 		
 		//permet d'ecrire le message de victoire en fonction du nombre d'essaies
@@ -54,13 +54,23 @@ namespace mastermind
 			int nbE = 0;
 			Console.WriteLine("1er joueur : \n");
 			
-			//faire : entré utilisateur avec _getche dans "combinaison"
+			//entrée utilisateur pour la chaine de caractère solution
+			string entréUtilisateur = Console.ReadLine();
+			combinaison = entréUtilisateur.ToCharArray();
+			//UTILISER GETCHE()
+			Console.Clear();
 			//boucle while qui se fini quand toute la chaine de caractere a ete trouver
-			nbE++;
-			Joueur2(ref nbE,combinaison,essaie);
-			//faire : entrer utilisateur pour joueur 2 dans "essaie"
+			while (entréUtilisateur != essaie) {
+				//incrémentation du nombre d'essaies
+				nbE++;
+				//tentatives du joueur 2
+				string entréUtilisateur2 = Console.ReadLine();
+				essaie=entréUtilisateur2.ToCharArray();
+				Console.WriteLine(essaie);
+				Console.WriteLine(combinaison);
+				Joueur2(ref nbE,combinaison,essaie);
+			}
 			
-			//fin while
 			//affichage du résultat
 			Bilan(nbE);
 			Console.ReadKey(true);
