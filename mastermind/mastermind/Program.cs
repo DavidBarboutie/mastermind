@@ -18,13 +18,17 @@ namespace mastermind
 	{
 		
 		[DllImport("msvcrt")]
-		static  extern int _getche();
+		static extern int _getche();
 		
 		//verifie les caracteres
 		//utilise regex
 		public static bool caractValide(char caract, bool joueur1){
+			
+			//filtre
 			Regex rx = new Regex("[BRNVJOG]");
 			MatchCollection matchedCarctere = rx.Matches(caract.ToString());
+			
+			//verification du fait que le caractere rentré se trouve dans le filtre
 			for (int count = 0; count < matchedCarctere.Count; count++) {
 				if (matchedCarctere[count].Value != null) {
 					return true;
@@ -39,7 +43,26 @@ namespace mastermind
 		
 		//fonction qui fait fonctionner la partie du joueur 2
 		public static void Joueur2(ref int nbE, char[] combinaison, char[] essaie){
-			//
+			int bp = 0;
+			int mp = 0;
+			//calculBpMp(bp,mp,combinaison,essaie,);
+			
+			//affichage de la ligne en haut
+			if (nbE == 1) {
+				Console.WriteLine("2eme Joueur :		bien place		mal place");
+			}
+			
+			
+			//affichage des lignes d'essaie
+			Console.Write("essai :" + nbE +" ");
+			
+			//permet laffichage des element du tableau essaie
+			foreach (char element in essaie){
+				Console.Write(element);
+			}
+			
+			//fin de la ligne d'eesaie
+			Console.Write("		"+bp+"			"+mp+"\n");
 		}
 		
 		//permet d'ecrire le message de victoire en fonction du nombre d'essaies
@@ -98,6 +121,9 @@ namespace mastermind
 				//incrémentation du nombre d'essaies
 				nbE++;
 				
+				//affichage de l'ecran du joueur 2
+				Joueur2(ref nbE,combinaison,essaie);
+				
 				//tentatives du joueur 2
 				//compteur
 				int cpt = 0;
@@ -105,21 +131,20 @@ namespace mastermind
 				//5 caracteres
 				while (cpt < 5) {
 					
-					//utilisation du _getche() pour ne pas avoir a faire entrer une fois les 5 caractere entrés
+					//verification de la validité du caractere entrer doit etre B,R,N,V,J,O ou G
 					char entrer_essaie = (char)_getche();
+					//boucle while qui se termine seulement quand les 5 caracteres filtrés ont été entrer dans le tableau de char d'essaie
+					while (caractValide(entrer_essaie,true) != true) {
+						//utilisation du _getche() pour ne pas avoir a faire entrer une fois les 5 caractere entrés
+						entrer_essaie = (char)_getche();
+					}
 					
 					//ajout des caractere au tableau d'essaie
 					essaie[cpt] = entrer_essaie;
 					
 					//incrementation pour sortir de la boucle quand les 5 caracteres sont entrés
 					cpt++;
-				}
-				
-				
-				Console.Clear();
-				Console.WriteLine(essaie);		//debug
-				Console.WriteLine(combinaison); //debug
-				Joueur2(ref nbE,combinaison,essaie);
+				}				
 			}
 			
 			//affichage du résultat
