@@ -8,6 +8,7 @@
  */
 using System;
 using System.Runtime.InteropServices; // pour _getche()
+using System.Linq;
 
 namespace mastermind
 {
@@ -25,7 +26,7 @@ namespace mastermind
 		}
 		//compte le nombre de bien et mauvais placé
 		public static void calculBpMp(ref int bp, ref int mp, char[] combinaison, char[] essaie, char[] combinaisonEssaie){
-		
+			//
 		}
 		
 		//fonction qui fait fonctionner la partie du joueur 2
@@ -60,24 +61,48 @@ namespace mastermind
 			Console.WriteLine("1er joueur : \n");
 			
 			//entrée utilisateur pour la chaine de caractère solution
-			
 			//5 caracteres
 			while (saisie < 5) {
+				
 				//utilisation du _getche() pour ne pas avoir a faire entrer une fois les 5 caractere entrés
 				char entrer_combinaison = (char)_getche();
+				
 				//ajout des caractere au tableau réponse
 				combinaison[saisie]=entrer_combinaison;
+				
 				//incrementation pour sortir de la boucle quand les 5 caracteres sont entrés
 				saisie++;
 			}
+			//effacer la réponse de l'ecran
 			Console.Clear();
 			
 			//boucle while qui se fini quand toute la chaine de caractere a ete trouver
-			while (combinaison != essaie) {
+			//boucle principale
+			//tant que combinaison et essaie sont different, executé la boucle
+			while (combinaison.SequenceEqual(essaie) == false) {
+				
 				//incrémentation du nombre d'essaies
 				nbE++;
+				
 				//tentatives du joueur 2
-				char entrer_essaie = (char)_getche();
+				//compteur
+				int cpt = 0;
+				
+				//5 caracteres
+				while (cpt < 5) {
+					
+					//utilisation du _getche() pour ne pas avoir a faire entrer une fois les 5 caractere entrés
+					char entrer_essaie = (char)_getche();
+					
+					//ajout des caractere au tableau d'essaie
+					essaie[cpt] = entrer_essaie;
+					
+					//incrementation pour sortir de la boucle quand les 5 caracteres sont entrés
+					cpt++;
+				}
+				
+				
+				Console.Clear();
 				Console.WriteLine(essaie);		//debug
 				Console.WriteLine(combinaison); //debug
 				Joueur2(ref nbE,combinaison,essaie);
