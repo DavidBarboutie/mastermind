@@ -22,7 +22,7 @@ namespace mastermind
 		
 		//verifie les caracteres
 		//utilise regex
-		public static bool caractValide(char caract, bool joueur1){
+		public static bool caractValide(char caract){
 			
 			//filtre
 			Regex rx = new Regex("[BRNVJOG]");
@@ -37,15 +37,19 @@ namespace mastermind
 			return false;
 		}
 		//compte le nombre de bien et mauvais placé
-		public static void calculBpMp(ref int bp, ref int mp, char[] combinaison, char[] essaie, char[] combinaisonEssaie){
-			//
+		public static void calculBpMp(ref int bp, ref int mp, char[] combinaison, char[] essaie){ //char[] combinaisonEssaie){
+			for (int i = 0; i < 5; i++) {
+				if (combinaison[i] == essaie[i]) {
+					bp++;
+				}
+			}
 		}
 		
 		//fonction qui fait fonctionner la partie du joueur 2
 		public static void Joueur2(ref int nbE, char[] combinaison, char[] essaie){
 			int bp = 0;
 			int mp = 0;
-			//calculBpMp(bp,mp,combinaison,essaie,);
+			calculBpMp(ref bp,ref mp,combinaison,essaie);
 			
 			//affichage de la ligne en haut
 			if (nbE == 1) {
@@ -55,11 +59,6 @@ namespace mastermind
 			
 			//affichage des lignes d'essaie
 			Console.Write("essai :" + nbE +" ");
-			
-			//permet laffichage des element du tableau essaie
-			foreach (char element in essaie){
-				Console.Write(element);
-			}
 			
 			//fin de la ligne d'eesaie
 			Console.Write("		"+bp+"			"+mp+"\n");
@@ -99,7 +98,7 @@ namespace mastermind
 				
 				//verification de la validité du caractere entrer doit etre B,R,N,V,J,O ou G
 				char entrer_combinaison = (char)_getche();
-				while (caractValide(entrer_combinaison,true) != true) {
+				while (caractValide(entrer_combinaison) != true) {
 					//utilisation du _getche() pour ne pas avoir a faire entrer une fois les 5 caractere entrés
 					entrer_combinaison = (char)_getche();
 				}
@@ -134,7 +133,7 @@ namespace mastermind
 					//verification de la validité du caractere entrer doit etre B,R,N,V,J,O ou G
 					char entrer_essaie = (char)_getche();
 					//boucle while qui se termine seulement quand les 5 caracteres filtrés ont été entrer dans le tableau de char d'essaie
-					while (caractValide(entrer_essaie,true) != true) {
+					while (caractValide(entrer_essaie) != true) {
 						//utilisation du _getche() pour ne pas avoir a faire entrer une fois les 5 caractere entrés
 						entrer_essaie = (char)_getche();
 					}
@@ -148,6 +147,7 @@ namespace mastermind
 			}
 			
 			//affichage du résultat
+			Console.Write("vous avez trouver en "+nbE+" essaies");
 			Bilan(nbE);
 			Console.ReadKey(true);
 		}
