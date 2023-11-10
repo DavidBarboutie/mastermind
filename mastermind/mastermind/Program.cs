@@ -14,6 +14,10 @@ namespace mastermind
 	
 	class Program
 	{
+		
+		[DllImport("msvcrt")]
+		static  extern int _getche();
+		
 		//verifie les caracteres
 		//utilise regex
 		public static bool caractValide(char caract, bool joueur1){
@@ -23,6 +27,7 @@ namespace mastermind
 		public static void calculBpMp(ref int bp, ref int mp, char[] combinaison, char[] essaie, char[] combinaisonEssaie){
 		
 		}
+		
 		//fonction qui fait fonctionner la partie du joueur 2
 		public static void Joueur2(ref int nbE, char[] combinaison, char[] essaie){
 			//
@@ -49,25 +54,32 @@ namespace mastermind
 		public static void Main(string[] args)
 		{
 			char[] combinaison = new char[5]; //tableau réponse
-			char[] essaie = new Char[5];	  //tableau d'essaie
-			char saisie;					  //indice de parcours des tableaux
+			char[] essaie = new char[5];	  //tableau d'essaie
+			int saisie = 0;					  //indice de parcours des tableaux
 			int nbE = 0;
 			Console.WriteLine("1er joueur : \n");
 			
 			//entrée utilisateur pour la chaine de caractère solution
-			string entréUtilisateur = Console.ReadLine();
-			combinaison = entréUtilisateur.ToCharArray();
-			//UTILISER GETCHE()
+			
+			//5 caracteres
+			while (saisie < 5) {
+				//utilisation du _getche() pour ne pas avoir a faire entrer une fois les 5 caractere entrés
+				char entrer_combinaison = (char)_getche();
+				//ajout des caractere au tableau réponse
+				combinaison[saisie]=entrer_combinaison;
+				//incrementation pour sortir de la boucle quand les 5 caracteres sont entrés
+				saisie++;
+			}
 			Console.Clear();
+			
 			//boucle while qui se fini quand toute la chaine de caractere a ete trouver
-			while (entréUtilisateur != essaie) {
+			while (combinaison != essaie) {
 				//incrémentation du nombre d'essaies
 				nbE++;
 				//tentatives du joueur 2
-				string entréUtilisateur2 = Console.ReadLine();
-				essaie=entréUtilisateur2.ToCharArray();
-				Console.WriteLine(essaie);
-				Console.WriteLine(combinaison);
+				char entrer_essaie = (char)_getche();
+				Console.WriteLine(essaie);		//debug
+				Console.WriteLine(combinaison); //debug
 				Joueur2(ref nbE,combinaison,essaie);
 			}
 			
