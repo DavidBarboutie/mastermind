@@ -8,7 +8,8 @@
  */
 using System;
 using System.Runtime.InteropServices; // pour _getche()
-using System.Linq;
+using System.Linq; // pour .SequenceEgual()
+using System.Text.RegularExpressions; //regex
 
 namespace mastermind
 {
@@ -22,7 +23,14 @@ namespace mastermind
 		//verifie les caracteres
 		//utilise regex
 		public static bool caractValide(char caract, bool joueur1){
-			return true;
+			Regex rx = new Regex("[BRNVJOG]");
+			MatchCollection matchedCarctere = rx.Matches(caract.ToString());
+			for (int count = 0; count < matchedCarctere.Count; count++) {
+				if (matchedCarctere[count].Value != null) {
+					return true;
+				}
+			}
+			return false;
 		}
 		//compte le nombre de bien et mauvais placé
 		public static void calculBpMp(ref int bp, ref int mp, char[] combinaison, char[] essaie, char[] combinaisonEssaie){
@@ -64,8 +72,14 @@ namespace mastermind
 			//5 caracteres
 			while (saisie < 5) {
 				
-				//utilisation du _getche() pour ne pas avoir a faire entrer une fois les 5 caractere entrés
+				
+				
+				//verification de la validité du caractere entrer doit etre B,R,N,V,J,O ou G
 				char entrer_combinaison = (char)_getche();
+				while (caractValide(entrer_combinaison,true) != true) {
+					//utilisation du _getche() pour ne pas avoir a faire entrer une fois les 5 caractere entrés
+					entrer_combinaison = (char)_getche();
+				}
 				
 				//ajout des caractere au tableau réponse
 				combinaison[saisie]=entrer_combinaison;
