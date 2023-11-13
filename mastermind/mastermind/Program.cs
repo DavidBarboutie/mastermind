@@ -45,7 +45,7 @@ namespace mastermind
 				if (combinaison[i] == essaie[i]) {
 					bp++;
 					combinaisonEssaie[i]= char.Parse("X");
-					essaie[i]=char.Parse("X");
+					essaie[i]=char.Parse("Y");
 				}
 				else{
 					combinaisonEssaie[i] = combinaison[i];
@@ -57,7 +57,7 @@ namespace mastermind
 				for (int j = 0; j < combinaisonEssaie.Length; j++) {
 					if (combinaisonEssaie[i] == essaie[j]) {
 						mp++;
-						combinaisonEssaie[i]=char.Parse("Y");
+						combinaisonEssaie[i]=char.Parse("X");
 						essaie[j]=char.Parse("Y");
 					}
 				}
@@ -70,12 +70,7 @@ namespace mastermind
 			char [] combinaisonEssaie = new char[5];
 			int bp = 0;
 			int mp = 0;
-			//Console.SetCursorPosition(Console.CursorLeft+2,0);
-			//affichage de la ligne en haut
-			if (nbE == 1) {
-				Console.WriteLine("2eme Joueur :		bien place		mal place");
-			}
-			
+			//Console.SetCursorPosition(Console.CursorLeft,0);
 			
 			//affichage des lignes d'essaie
 			Console.Write("essai :" + nbE +" ");
@@ -146,6 +141,11 @@ namespace mastermind
 				nbE++;
 				
 				//affichage de l'ecran du joueur 2
+				//affichage de la ligne en haut
+				if (nbE == 1) {
+				Console.WriteLine("2eme Joueur :		bien place		mal place");
+				}
+				
 				Joueur2(ref nbE,combinaison,essaie);
 				
 				//tentatives du joueur 2
