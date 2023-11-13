@@ -28,7 +28,7 @@ namespace mastermind
 			Regex rx = new Regex("[BRNVJOG]");
 			MatchCollection matchedCarctere = rx.Matches(caract.ToString());
 			
-			//verification du fait que le caractere rentré se trouve dans le filtre
+			//verifir si le caractere rentré se trouve bien dans le filtre
 			for (int count = 0; count < matchedCarctere.Count; count++) {
 				if (matchedCarctere[count].Value != null) {
 					return true;
@@ -37,20 +37,40 @@ namespace mastermind
 			return false;
 		}
 		//compte le nombre de bien et mauvais placé
-		public static void calculBpMp(ref int bp, ref int mp, char[] combinaison, char[] essaie){ //char[] combinaisonEssaie){
+		public static void calculBpMp(ref int bp, ref int mp, char[] combinaison, char[] essaie, char[] combinaisonEssaie){
+			
+				//bien placé
 			for (int i = 0; i < 5; i++) {
+				//verifie que les elements des 2 tableaux de char aux même index pour trouver les bien placé
 				if (combinaison[i] == essaie[i]) {
 					bp++;
+					combinaisonEssaie[i]= char.Parse("X");
+					essaie[i]=char.Parse("X");
+				}
+				else{
+					combinaisonEssaie[i] = combinaison[i];
 				}
 			}
+			
+			//mal placé
+			for (int i = 0; i < combinaisonEssaie.Length; i++) {
+				for (int j = 0; j < combinaisonEssaie.Length; j++) {
+					if (combinaisonEssaie[i] == essaie[j]) {
+						mp++;
+						combinaisonEssaie[i]=char.Parse("Y");
+						essaie[j]=char.Parse("Y");
+					}
+				}
+			}
+			
 		}
 		
 		//fonction qui fait fonctionner la partie du joueur 2
 		public static void Joueur2(ref int nbE, char[] combinaison, char[] essaie){
+			char [] combinaisonEssaie = new char[5];
 			int bp = 0;
 			int mp = 0;
-			calculBpMp(ref bp,ref mp,combinaison,essaie);
-			
+			//Console.SetCursorPosition(Console.CursorLeft+2,0);
 			//affichage de la ligne en haut
 			if (nbE == 1) {
 				Console.WriteLine("2eme Joueur :		bien place		mal place");
@@ -60,7 +80,11 @@ namespace mastermind
 			//affichage des lignes d'essaie
 			Console.Write("essai :" + nbE +" ");
 			
+			//position du curseur
+			
+			
 			//fin de la ligne d'eesaie
+			calculBpMp(ref bp,ref mp,combinaison,essaie,combinaisonEssaie);
 			Console.Write("		"+bp+"			"+mp+"\n");
 		}
 		
@@ -86,28 +110,29 @@ namespace mastermind
 		{
 			char[] combinaison = new char[5]; //tableau réponse
 			char[] essaie = new char[5];	  //tableau d'essaie
-			int saisie = 0;					  //indice de parcours des tableaux
+			char saisie;					  //indice de parcours des tableaux
 			int nbE = 0;
 			Console.WriteLine("1er joueur : \n");
 			
 			//entrée utilisateur pour la chaine de caractère solution
 			//5 caracteres
-			while (saisie < 5) {
+			int cpt1 = 0;
+			while (cpt1 < 5) {
 				
 				
 				
 				//verification de la validité du caractere entrer doit etre B,R,N,V,J,O ou G
-				char entrer_combinaison = (char)_getche();
-				while (caractValide(entrer_combinaison) != true) {
+				saisie = (char)_getche();
+				while (caractValide(saisie) != true) {
 					//utilisation du _getche() pour ne pas avoir a faire entrer une fois les 5 caractere entrés
-					entrer_combinaison = (char)_getche();
+					saisie = (char)_getche();
 				}
 				
 				//ajout des caractere au tableau réponse
-				combinaison[saisie]=entrer_combinaison;
+				combinaison[cpt1]=saisie;
 				
 				//incrementation pour sortir de la boucle quand les 5 caracteres sont entrés
-				saisie++;
+				cpt1++;
 			}
 			//effacer la réponse de l'ecran
 			Console.Clear();
@@ -125,10 +150,10 @@ namespace mastermind
 				
 				//tentatives du joueur 2
 				//compteur
-				int cpt = 0;
+				int cpt2 = 0;
 				
 				//5 caracteres
-				while (cpt < 5) {
+				while (cpt2 < 5) {
 					
 					//verification de la validité du caractere entrer doit etre B,R,N,V,J,O ou G
 					char entrer_essaie = (char)_getche();
@@ -139,10 +164,10 @@ namespace mastermind
 					}
 					
 					//ajout des caractere au tableau d'essaie
-					essaie[cpt] = entrer_essaie;
+					essaie[cpt2] = entrer_essaie;
 					
 					//incrementation pour sortir de la boucle quand les 5 caracteres sont entrés
-					cpt++;
+					cpt2++;
 				}				
 			}
 			
