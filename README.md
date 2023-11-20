@@ -5,8 +5,8 @@
 le principe du jeu est de découvrir la séquence de couleur caché par l'adversaire (5 couleur parmi 7).
 le joueur qui ne connais pas la séquence obtiens les informations suivantes après chaque essaie.
 
-*le nombre de couleurs bien placé
-*le nombre de couleurs mal placé
+* le nombre de couleurs bien placé
+* le nombre de couleurs mal placé
 
 ## fonctions
 ### caractvalide
