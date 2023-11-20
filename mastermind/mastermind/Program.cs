@@ -86,7 +86,7 @@ namespace mastermind
 		//permet d'ecrire le message de victoire en fonction du nombre d'essaies
 		public static void Bilan(int nbE){
 			//si le joueur a trouver la chaine de caractere en moins de 5 essais
-			if (nbE <=5) {
+			if (nbE <= 5) {
 				Console.WriteLine(" Bravo ! ");
 			}
 			else{
@@ -168,7 +168,8 @@ namespace mastermind
 					
 					//incrementation pour sortir de la boucle quand les 5 caracteres sont entrés
 					cpt2++;
-				}				
+				}
+				Console.WriteLine(" ");
 			}
 			
 			//affichage du résultat
